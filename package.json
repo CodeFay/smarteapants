@@ -25,7 +25,7 @@
   "license": "MIT",
   "scripts": {
     "build:app": "gatsby build",
-    "build:server": "netlify-lambda build functions -c ./webpack.config.js",
+    "build:server": "FAUNA_KEY=fnAC-8TFy5ACARqo1n6UCnON6XTCYivQ3MShAdXw netlify-lambda build functions -c ./webpack.config.js",
     "build": "npm-run-all --parallel build:**",
     "develop": "gatsby develop",
     "start": "npm-run-all --parallel checkForFaunaKey start:app start:server",
