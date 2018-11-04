@@ -86,8 +86,6 @@ class Question extends React.Component {
   }
 
   render() {
-    const questions = this.getQuestions()
-
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.handleSubmit}>
