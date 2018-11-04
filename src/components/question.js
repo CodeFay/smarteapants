@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import Axios from 'axios'
+import { Button } from '@material-ui/core';
 
 const styles = theme => ({
   layout: {
@@ -79,7 +80,6 @@ class Question extends React.Component {
     return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
         console.log('API response', res)
-        return res
       }).catch((err) => {
         console.log('API error', err)
       })
@@ -89,6 +89,7 @@ class Question extends React.Component {
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.handleSubmit}>
+        <button onClick={ () => this.getQuestions() }>Fetch me data!</button>
         <Paper className={classes.paper}>
           <Grid container className={classes.grid}>
             <Grid item xs={12}>
