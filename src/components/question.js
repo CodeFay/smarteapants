@@ -83,10 +83,10 @@ class Question extends React.Component {
   }
 
   questions = this.getQuestions().then(res => {
-    console.log('API response', res)
+    console.log('API response2', res)
     return res;
   }).catch((err) => {
-    console.log('API error', err)
+    console.log('API error2', err)
   })
 
   render() {
