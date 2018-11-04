@@ -24,7 +24,7 @@ function ButtonAppBar(props) {
           SmarTea Pants
         </Typography>
         <div>
-          <Icon className={classes.icon}>upward_arrow</Icon>
+          <Icon className={classes.icon}>upward_arrow alal</Icon>
           <Typography color="inherit">Bank: ${bank}</Typography>
         </div>
       </Toolbar>
