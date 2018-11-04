@@ -19,9 +19,13 @@ exports.handler = (event, context, callback) => {
   .then((res) => {
     console.log("success", res)
     /* Success! return the response with statusCode 200 */
+    return res.json()
+  }).then((json) => {
+    console.log("success", json)
+    /* Success! return the response with statusCode 200 */
     return callback(null, {
       statusCode: 200,
-      body: JSON.stringify(res)
+      body: JSON.stringify(json)
     })
   }).catch((error) => {
     console.log("error", error)

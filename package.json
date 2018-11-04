@@ -28,9 +28,9 @@
     "build:server": "FAUNA_KEY=fnAC-8TFy5ACARqo1n6UCnON6XTCYivQ3MShAdXw netlify-lambda build functions -c ./webpack.config.js",
     "build": "npm-run-all --parallel build:**",
     "develop": "gatsby develop",
-    "start": "npm-run-all --parallel checkForFaunaKey start:app start:server",
     "start:app": "npm run develop",
-    "start:server": "netlify-lambda serve functions -c ./webpack.config.js",
+    "start:server": "FAUNA_KEY=fnAC-8TFy5ACARqo1n6UCnON6XTCYivQ3MShAdXw netlify-lambda serve functions -c ./webpack.config.js",
+    "start": "npm-run-all --parallel start:app start:server",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

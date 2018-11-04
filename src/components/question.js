@@ -74,6 +74,20 @@ class Question extends React.Component {
     }
   }
 
+  getQuestions() {
+    return fetch('/.netlify/functions/getQuestions')
+      .then(res => {
+        return res.json()
+      })
+  }
+
+  questions = this.getQuestions().then(res => {
+    console.log('API response', res)
+    return res;
+  }).catch((err) => {
+    console.log('API error', err)
+  })
+
   render() {
     const { classes } = this.props
     return (
