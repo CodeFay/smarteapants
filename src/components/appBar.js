@@ -27,7 +27,8 @@ function ButtonAppBar(props) {
 
     <Grid item sm={5} >
     <Typography>
-      <img src="./static/smartea%402x.png" />
+
+      <img src="https://raw.githubusercontent.com/CodeFay/smarteapants/master/src/images/smartea%402x.png" />
 </Typography>
       </Grid>
         <div>
