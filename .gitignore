@@ -4,8 +4,10 @@ node_modules
 yarn-error.log
 
 # Build directory
+/functions-build
 /public
 .DS_Store
 
 # for devs eyes only
 .env
+netlify.toml

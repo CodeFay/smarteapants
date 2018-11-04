@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+import Axios from 'axios'
 
 const styles = theme => ({
   layout: {
@@ -73,6 +74,20 @@ class Question extends React.Component {
       this.props.handleDelta(value)
     }
   }
+
+  getQuestions() {
+    return Axios.get('/.netlify/functions/getQuestions')
+      .then(res => {
+        return res
+      })
+  }
+
+  questions = this.getQuestions().then(res => {
+    console.log('API response', res)
+    return res;
+  }).catch((err) => {
+    console.log('API error', err)
+  })
 
   render() {
     const { classes } = this.props

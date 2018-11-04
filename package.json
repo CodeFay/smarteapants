@@ -6,6 +6,8 @@
   "dependencies": {
     "@material-ui/core": "^3.3.2",
     "@material-ui/icons": "^3.0.1",
+    "axios": "^0.18.0",
+    "faunadb": "^2.5.2",
     "gatsby": "^2.0.19",
     "gatsby-image": "^2.0.15",
     "gatsby-plugin-manifest": "^2.0.5",
@@ -23,13 +25,20 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build:app": "gatsby build",
+    "build:server": "FAUNA_KEY=fnAC-8TFy5ACARqo1n6UCnON6XTCYivQ3MShAdXw netlify-lambda build functions -c ./webpack.config.js",
+    "build": "npm-run-all --parallel build:**",
     "develop": "gatsby develop",
-    "start": "npm run develop",
+    "start:app": "npm run develop",
+    "start:server": "FAUNA_KEY=fnAC-8TFy5ACARqo1n6UCnON6XTCYivQ3MShAdXw netlify-lambda serve functions -c ./webpack.config.js",
+    "start": "npm-run-all --parallel start:app start:server",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "http-proxy-middleware": "^0.19.0",
+    "netlify-lambda": "^1.0.2",
+    "npm-run-all": "^4.1.3",
     "prettier": "^1.14.2"
   },
   "repository": {
