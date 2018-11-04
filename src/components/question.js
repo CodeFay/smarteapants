@@ -75,21 +75,19 @@ class Question extends React.Component {
     }
   }
 
-  getQuestions() {
+  getQuestions = () => {
     return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
+        console.log('API response', res)
         return res
+      }).catch((err) => {
+        console.log('API error', err)
       })
   }
 
-  questions = this.getQuestions().then(res => {
-    console.log('API response2', res)
-    return res;
-  }).catch((err) => {
-    console.log('API error2', err)
-  })
-
   render() {
+    const questions = this.getQuestions()
+
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.handleSubmit}>
