@@ -79,10 +79,14 @@ class Question extends React.Component {
     return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
         console.log('API response', res)
-        return res
+        this.setState({ questions: res.data.data })
       }).catch((err) => {
         console.log('API error', err)
       })
+  }
+
+  componentDidMount() {
+    this.getQuestions()
   }
 
   render() {
