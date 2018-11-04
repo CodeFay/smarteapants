@@ -64,13 +64,18 @@ class Index extends React.Component {
        ? (curQuestion.value.substring(1))
        : 100)
       this.handleDelta(value)
-      this.incCurQuestion()
-      this.setState({ input: '' })
+      // this.incCurQuestion()
+      this.setState({ input: '', showAnswer: true })
     }
   }
 
   incCurQuestion = () => {
-    this.setState( state => state.curQuestion++ )
+    this.setState( state => {
+      return {
+        curQuestion: ++state.curQuestion,
+        showAnswer: false
+      }
+    })
   }
 
   handleDelta = (value) => {
