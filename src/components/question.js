@@ -5,7 +5,6 @@ import Chip from '@material-ui/core/Chip'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
-import Axios from 'axios'
 
 const styles = theme => ({
   layout: {
@@ -41,16 +40,6 @@ class Question extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      question: {
-        category: "ESPN's TOP 10 ALL-TIME ATHLETES",
-        air_date: '2004-12-31',
-        question:
-          "'No. 2: 1912 Olympian; football star at Carlisle Indian School; 6 MLB seasons with the Reds, Giants & Braves'",
-        value: '$200',
-        answer: 'Jim Thorpe',
-        round: 'Jeopardy!',
-        show_number: '4680',
-      },
       input: '',
     }
     this.handleChange = this.handleChange.bind(this)
@@ -75,18 +64,8 @@ class Question extends React.Component {
     }
   }
 
-  getQuestions = () => {
-    return Axios.get('/.netlify/functions/getQuestions')
-      .then(res => {
-        console.log('API response', res)
-        this.setState({ questions: res.data.data })
-      }).catch((err) => {
-        console.log('API error', err)
-      })
-  }
-
   componentDidMount() {
-    this.getQuestions()
+    this.props.getQuestions()
   }
 
   render() {
@@ -103,8 +82,8 @@ class Question extends React.Component {
                 direction="row"
                 justify="space-between"
               >
-                <Grid item>{this.state.question.category}</Grid>
-                <Grid item>{this.state.question.value}</Grid>
+                <Grid item>{ /*this.props.question.data.category*/}</Grid>
+                <Grid item>{/*this.props.question.data.value*/}</Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -116,7 +95,7 @@ class Question extends React.Component {
             color="textPrimary"
             gutterBottom
           >
-            {this.state.question.question}
+            { this.props.showQuestion().data.question }
           </Typography>
           <TextField
             onChange={this.handleChange}
