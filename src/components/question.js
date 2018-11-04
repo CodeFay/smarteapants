@@ -77,6 +77,7 @@ class Question extends React.Component {
   getQuestions() {
     return fetch('/.netlify/functions/getQuestions')
       .then(res => {
+        console.log('res = ', res)
         return res.json()
       })
   }
