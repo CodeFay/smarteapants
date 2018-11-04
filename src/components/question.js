@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+import Answer from '../components/answer'
 
 const styles = theme => ({
   layout: {
@@ -37,10 +38,6 @@ const styles = theme => ({
 })
 
 class Question extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     this.props.getQuestions()
   }
@@ -86,8 +83,10 @@ class Question extends React.Component {
             InputLabelProps={{
               shrink: true,
             }}
+            value={ this.props.input }
           />
         </Paper>
+        { this.props.showAnswer ? <Answer answer={ curQuestion.answer } /> : null }
       </form>
     )
   }

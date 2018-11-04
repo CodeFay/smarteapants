@@ -28,11 +28,13 @@ class Index extends React.Component {
           data: {
             question: '',
             category: '',
-            value: ''
+            value: '',
+            answer: ''
           }
         }
       ],
-      curQuestion: 0
+      curQuestion: 0,
+      showAnswer: false
     }
   }
 
@@ -48,6 +50,7 @@ class Index extends React.Component {
     console.log(curIndex, curQuestion)
     event.preventDefault()
     if (this.state.input.length === 0) {
+      this.incCurQuestion()
       return
     } else if (this.state.input === curQuestion.answer) {
       let value = curQuestion.value
@@ -55,12 +58,14 @@ class Index extends React.Component {
        : 100
       this.handleDelta(value)
       this.incCurQuestion()
+      this.setState({ input: '' })
     } else {
       let value = -(curQuestion.value
        ? (curQuestion.value.substring(1))
        : 100)
       this.handleDelta(value)
       this.incCurQuestion()
+      this.setState({ input: '' })
     }
   }
 
@@ -104,6 +109,8 @@ class Index extends React.Component {
           getQuestions={ () => this.getQuestions() }
           showQuestion={ (i) => this.showQuestion(i) }
           curQuestion={ this.state.curQuestion }
+          input={ this.state.input }
+          showAnswer={ this.state.showAnswer }
         />
       </div>
     )
