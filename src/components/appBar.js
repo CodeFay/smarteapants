@@ -5,6 +5,8 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
+import Grid from '@material-ui/core/Grid'
+
 
 const styles = {
   root: {
@@ -18,15 +20,23 @@ const styles = {
 function ButtonAppBar(props) {
   const { classes, bank } = props
   return (
-    <AppBar position="static">
+    <AppBar position="static" >
       <Toolbar>
-        <Typography variant="h6" color="inherit" className={classes.grow}>
-          SmarTea Pants
-        </Typography>
+
+      <Grid container justify="space-between"   alignItems="center">
+
+    <Grid item sm={5} >
+    <Typography>
+
+      <img src="https://raw.githubusercontent.com/CodeFay/smarteapants/master/src/images/smartea%402x.png" />
+</Typography>
+      </Grid>
         <div>
-          <Icon className={classes.icon}>upward_arrow</Icon>
-          <Typography color="inherit">Bank: ${bank}</Typography>
+      <Grid>
+          <Typography color="inherit" variant="h5">Bank: ${bank}</Typography>
+       </Grid> 
         </div>
+</Grid>
       </Toolbar>
     </AppBar>
   )
