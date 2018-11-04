@@ -1,13 +1,11 @@
 import React from 'react'
-import { Link } from 'gatsby'
 
 import Question from '../components/question'
 import AppBar from '../components/appBar'
 
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+
+import Axios from 'axios'
 
 let backgroundColor = ''
 
@@ -22,13 +20,55 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      input: '',
       bank: 0,
       submitted: 0,
+      questions: [
+        {
+          data: {
+            question: '',
+            category: '',
+            value: ''
+          }
+        }
+      ],
+      curQuestion: 0
     }
-    this.handleDelta = this.handleDelta.bind(this)
   }
 
-  handleDelta(value) {
+  handleChange = event => {
+    this.setState({
+      input: event.target.value,
+    })
+  }
+  
+  handleSubmit = event => {
+    const curIndex = this.state.curQuestion
+    const curQuestion = this.state.questions[curIndex].data
+    console.log(curIndex, curQuestion)
+    event.preventDefault()
+    if (this.state.input.length === 0) {
+      return
+    } else if (this.state.input === curQuestion.answer) {
+      let value = curQuestion.value
+       ? +(curQuestion.value.substring(1))
+       : 100
+      this.handleDelta(value)
+      this.incCurQuestion()
+    } else {
+      let value = -(curQuestion.value
+       ? (curQuestion.value.substring(1))
+       : 100)
+      this.handleDelta(value)
+      this.incCurQuestion()
+    }
+  }
+
+  incCurQuestion = () => {
+    this.setState( state => state.curQuestion++ )
+  }
+
+  handleDelta = (value) => {
     var delta = value > 0 ? 1 : -1
     console.log(delta)
     this.setState((state, props) => ({
@@ -37,12 +77,34 @@ class Index extends React.Component {
     }))
   }
 
+  getQuestions = () => {
+    return Axios.get('/.netlify/functions/getQuestions')
+      .then(res => {
+        // console.log('API response', res)
+        this.setState({ questions: res.data.data })
+      }).catch((err) => {
+        console.log('API error', err)
+      })
+  }
+
+  showQuestion = (i) => {
+    const question = this.state.questions[i]
+    return question
+  }
+
   render() {
     const { classes } = this.props
     return (
       <div className={classes.container}>
         <AppBar change={this.state.submittted} bank={this.state.bank} />
-        <Question handleDelta={this.handleDelta} />
+        <Question
+          handleChange={ event => this.handleChange(event) }
+          handleSubmit={ event => this.handleSubmit(event) }
+          handleDelta={ value => this.handleDelta(value) }
+          getQuestions={ () => this.getQuestions() }
+          showQuestion={ (i) => this.showQuestion(i) }
+          curQuestion={ this.state.curQuestion }
+        />
       </div>
     )
   }
