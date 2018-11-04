@@ -39,29 +39,6 @@ const styles = theme => ({
 class Question extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      input: '',
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleChange = event => {
-    this.setState({
-      input: event.target.value,
-    })
-  }
-  handleSubmit = event => {
-    event.preventDefault()
-    if (this.state.input.length === 0) {
-      return
-    } else if (this.state.input === this.state.question.answer) {
-      let value = parseInt(this.state.question.value.substring(1))
-      this.props.handleDelta(value)
-    } else {
-      let value = parseInt(this.state.question.value.substring(1)) * -1
-      this.props.handleDelta(value)
-    }
   }
 
   componentDidMount() {
@@ -69,9 +46,10 @@ class Question extends React.Component {
   }
 
   render() {
+    const curQuestion = this.props.showQuestion(this.props.curQuestion).data
     const { classes } = this.props
     return (
-      <form className={classes.layout} onSubmit={this.handleSubmit}>
+      <form className={classes.layout} onSubmit={this.props.handleSubmit}>
         <Paper className={classes.paper}>
           <Grid container className={classes.grid}>
             <Grid item xs={12}>
@@ -82,8 +60,8 @@ class Question extends React.Component {
                 direction="row"
                 justify="space-between"
               >
-                <Grid item>{ /*this.props.question.data.category*/}</Grid>
-                <Grid item>{/*this.props.question.data.value*/}</Grid>
+                <Grid item>{ curQuestion.category }</Grid>
+                <Grid item>{ curQuestion.value || '$100' }</Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -95,10 +73,10 @@ class Question extends React.Component {
             color="textPrimary"
             gutterBottom
           >
-            { this.props.showQuestion().data.question }
+            { curQuestion.question }
           </Typography>
           <TextField
-            onChange={this.handleChange}
+            onChange={this.props.handleChange}
             id="answer-input"
             label="Answer"
             style={{ margin: 0 }}
