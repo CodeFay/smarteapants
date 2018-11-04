@@ -50,9 +50,7 @@ class Index extends React.Component {
     return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
         console.log('API response', res)
-        this.setState(state => {
-          return { questions: res.data.data }
-        })
+        this.setState({ questions: res.data.data })
       }).catch((err) => {
         console.log('API error', err)
       })
