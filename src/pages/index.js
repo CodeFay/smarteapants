@@ -34,7 +34,7 @@ class Index extends React.Component {
         }
       ],
       curQuestion: 0,
-      showAnswer: false
+      wrongAnswer: false
     }
   }
 
@@ -47,25 +47,24 @@ class Index extends React.Component {
   handleSubmit = event => {
     const curIndex = this.state.curQuestion
     const curQuestion = this.state.questions[curIndex].data
-    console.log(curIndex, curQuestion)
     event.preventDefault()
-    if (this.state.input.length === 0) {
+    if (this.state.input.length === 0 || this.state.wrongAnswer) { // no answer
       this.incCurQuestion()
+      this.setState({ input: '' })
       return
-    } else if (this.state.input === curQuestion.answer) {
+    } else if (this.state.input === curQuestion.answer) { // right answer
       let value = curQuestion.value
        ? +(curQuestion.value.substring(1))
        : 100
       this.handleDelta(value)
       this.incCurQuestion()
       this.setState({ input: '' })
-    } else {
+    } else { // wrong answer
       let value = -(curQuestion.value
        ? (curQuestion.value.substring(1))
        : 100)
       this.handleDelta(value)
-      // this.incCurQuestion()
-      this.setState({ input: '', showAnswer: true })
+      this.setState({ input: '', wrongAnswer: true })
     }
   }
 
@@ -73,14 +72,13 @@ class Index extends React.Component {
     this.setState( state => {
       return {
         curQuestion: ++state.curQuestion,
-        showAnswer: false
+        wrongAnswer: false
       }
     })
   }
 
   handleDelta = (value) => {
     var delta = value > 0 ? 1 : -1
-    console.log(delta)
     this.setState((state, props) => ({
       bank: state.bank + value,
       submitted: delta,
@@ -90,7 +88,6 @@ class Index extends React.Component {
   getQuestions = () => {
     return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
-        // console.log('API response', res)
         this.setState({ questions: res.data.data })
       }).catch((err) => {
         console.log('API error', err)
@@ -115,7 +112,7 @@ class Index extends React.Component {
           showQuestion={ (i) => this.showQuestion(i) }
           curQuestion={ this.state.curQuestion }
           input={ this.state.input }
-          showAnswer={ this.state.showAnswer }
+          showAnswer={ this.state.wrongAnswer }
         />
       </div>
     )
