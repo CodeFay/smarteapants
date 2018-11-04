@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
+import Axios from 'axios'
 
 const styles = theme => ({
   layout: {
@@ -75,10 +76,9 @@ class Question extends React.Component {
   }
 
   getQuestions() {
-    return fetch('/.netlify/functions/getQuestions')
+    return Axios.get('/.netlify/functions/getQuestions')
       .then(res => {
-        console.log('res = ', res)
-        return res.json()
+        return res
       })
   }
 

@@ -14,7 +14,7 @@ exports.handler = (event, context, callback) => {
   /* construct the fauna query */
   return client.query(q.Map(q.Paginate(q.Match(q.Index("questions_by_show_number"), "4680")), q.Lambda("q", q.Get(q.Var("q"))))) // This is hardcoded to "4680" for now
   .then((res) => {
-    console.log("success", res)
+    console.log("Success!", res.data.length)
     /* Success! return the response with statusCode 200 */
     return callback(null, {
       statusCode: 200,
