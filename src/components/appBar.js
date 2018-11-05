@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
 import Grid from '@material-ui/core/Grid'
-
+import SmarteaMasthead from '../images/smartea2x.png'
 
 const styles = {
   root: {
@@ -22,21 +22,16 @@ function ButtonAppBar(props) {
   return (
     <AppBar position="static" >
       <Toolbar>
-
-      <Grid container justify="space-between"   alignItems="center">
-
-    <Grid item sm={5} >
-    <Typography>
-
-      <img src="https://raw.githubusercontent.com/CodeFay/smarteapants/master/src/images/smartea%402x.png" />
-</Typography>
-      </Grid>
-        <div>
-      <Grid>
-          <Typography color="inherit" variant="h5">Bank: ${bank}</Typography>
-       </Grid> 
-        </div>
-</Grid>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item sm={5}>
+            <Typography><img src={ SmarteaMasthead } /></Typography>
+          </Grid>
+          <div>
+            <Grid>
+              <Typography color="inherit" variant="h5">Bank: ${bank}</Typography>
+            </Grid> 
+          </div>
+        </Grid>
       </Toolbar>
     </AppBar>
   )
