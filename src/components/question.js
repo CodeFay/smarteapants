@@ -44,6 +44,7 @@ class Question extends React.Component {
 
   render() {
     const curQuestion = this.props.showQuestion(this.props.curQuestion).data
+    const questionString = curQuestion.question.length
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.props.handleSubmit}>
@@ -70,7 +71,7 @@ class Question extends React.Component {
             color="textPrimary"
             gutterBottom
           >
-            { curQuestion.question }
+            {curQuestion.question.substring(1,questionString-1) }
           </Typography>
           <TextField
             onChange={this.props.handleChange}
