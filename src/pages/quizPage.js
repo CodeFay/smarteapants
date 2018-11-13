@@ -1,20 +1,22 @@
 import React from 'react'
 
-import Question from '../components/question'
+import Layout from '../components/layout'
+import Quiz from '../components/quiz'
 
 export default class QuizPage extends React.Component {
     render() {
         return (
-            <Question
-                handleTextInput={ event => this.state.handleTextInput(event) }
-                handleAnswerSubmit={ event => this.state.handleAnswerSubmit(event) }
-                handleDelta={ value => this.state.handleDelta(value) }
-                getQuestions={ () => this.state.getQuestions() }
-                // showQuestion={ (i) => this.state.showQuestion(i) }
-                curQuestion={ location.state.curQuestion }
-                textInput={ location.state.textInput }
-                showAnswer={ location.state.showAnswer }
-            />
+            <Layout>
+                <Quiz
+                    curQuestion={ this.state.questions[this.state.curQuestion].data }
+                    showAnswer={ this.state.showAnswer }
+                    textInput={ this.state.textInput }
+                    handleTextInput={ ev => this.handleChange(ev) }
+                    handleAnswerSubmit={ ev => this.handleSubmit(ev)}
+                    handleDelta={ value => this.handleDelta(value) }
+                    getQuestions={ () => this.getQuestions() }
+                />
+            </Layout>
         )
     }
 }

@@ -42,7 +42,7 @@ class Question extends React.Component {
   }
 
   render() {
-    const curQuestion = this.props.showQuestion(this.props.curQuestion).data
+    const curQuestion = this.props.curQuestion
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.props.handleAnswerSubmit}>

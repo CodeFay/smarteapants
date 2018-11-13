@@ -1,9 +1,9 @@
 import React from 'react'
 
-import AppBar from '../components/appBar'
 import GamePicker from '../components/gamePicker'
+import Layout from '../components/layout'
 
-import { withStyles } from '@material-ui/core/styles' // TODO: figure out Material-UI
+// import { withStyles } from '@material-ui/core/styles' // TODO: figure out Material-UI
 
 import Axios from 'axios'
 
@@ -11,24 +11,9 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      textInput: '',
-      bank: 0,
-      submitted: 0,
       airDates: [], // TODO: get air_dates from questions in database
       curShowDate: '',
       curShowNum: '4860', // TODO: get showNum for showDate
-      questions: [
-        {
-          data: {
-            question: '',
-            category: '',
-            value: '',
-            answer: ''
-          }
-        }
-      ],
-      curQuestion: 0,
-      wrongAnswer: false
     }
   }
 
@@ -95,32 +80,16 @@ class Index extends React.Component {
   // }
 
   render() {
-    const { classes } = this.props
     return (
-      <div className={ classes.container }>
-        <AppBar change={this.state.submittted} bank={this.state.bank} />
+      <Layout>
         <GamePicker
           airDates={ this.state.airDates }
           curShowNum={ this.state.curShowNum }
-          curQuestion={ this.state.curQuestion }
-          showAnswer={ this.state.wrongAnswer }
-          textInput={ this.state.textInput }
           handleSelect={ ev => this.pickShowDate(ev) }
-          handleTextInput={ ev => this.handleChange(ev) }
-          handleAnswerSubmit={ ev => this.handleSubmit(ev) }
-          handleDelta={ value => this.handleDelta(value) }
-          getQuestions={ () => this.getQuestions(this.state.curShowNum) }
         />
-      </div>
+      </Layout>
     )
   }
 }
 
-const styles = () => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-})
-
-export default withStyles(styles)(Index)
+export default Index
