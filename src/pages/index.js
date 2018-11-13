@@ -1,28 +1,22 @@
 import React from 'react'
 
-import Question from '../components/question'
 import AppBar from '../components/appBar'
+import GamePicker from '../components/gamePicker'
 
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles' // TODO: figure out Material-UI
 
 import Axios from 'axios'
-
-let backgroundColor = ''
-
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-})
 
 class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      input: '',
+      textInput: '',
       bank: 0,
       submitted: 0,
+      airDates: [], // TODO: get air_dates from questions in database
+      curShowDate: '',
+      curShowNum: '4860', // TODO: get showNum for showDate
       questions: [
         {
           data: {
@@ -38,10 +32,12 @@ class Index extends React.Component {
     }
   }
 
+  pickShowDate = ev => {
+    this.setState({ curShowDate: ev.target.value })
+  }
+
   handleChange = event => {
-    this.setState({
-      input: event.target.value,
-    })
+    this.setState({ input: event.target.value })
   }
   
   handleSubmit = event => {
@@ -94,29 +90,37 @@ class Index extends React.Component {
       })
   }
 
-  showQuestion = (i) => {
-    const question = this.state.questions[i]
-    return question
-  }
+  // showQuestion = i => {
+  //   return this.state.questions[i]
+  // }
 
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.container}>
+      <div className={ classes.container }>
         <AppBar change={this.state.submittted} bank={this.state.bank} />
-        <Question
-          handleChange={ event => this.handleChange(event) }
-          handleSubmit={ event => this.handleSubmit(event) }
-          handleDelta={ value => this.handleDelta(value) }
-          getQuestions={ () => this.getQuestions() }
-          showQuestion={ (i) => this.showQuestion(i) }
+        <GamePicker
+          airDates={ this.state.airDates }
+          curShowNum={ this.state.curShowNum }
           curQuestion={ this.state.curQuestion }
-          input={ this.state.input }
           showAnswer={ this.state.wrongAnswer }
+          textInput={ this.state.textInput }
+          handleSelect={ ev => this.pickShowDate(ev) }
+          handleTextInput={ ev => this.handleChange(ev) }
+          handleAnswerSubmit={ ev => this.handleSubmit(ev) }
+          handleDelta={ value => this.handleDelta(value) }
+          getQuestions={ () => this.getQuestions(this.state.curShowNum) }
         />
       </div>
     )
   }
 }
+
+const styles = () => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+})
 
 export default withStyles(styles)(Index)

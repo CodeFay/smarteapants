@@ -1,7 +1,6 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
-import Chip from '@material-ui/core/Chip'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
@@ -46,7 +45,7 @@ class Question extends React.Component {
     const curQuestion = this.props.showQuestion(this.props.curQuestion).data
     const { classes } = this.props
     return (
-      <form className={classes.layout} onSubmit={this.props.handleSubmit}>
+      <form className={classes.layout} onSubmit={this.props.handleAnswerSubmit}>
         <Paper className={classes.paper}>
           <Grid container className={classes.grid}>
             <Grid item xs={12}>
@@ -73,7 +72,7 @@ class Question extends React.Component {
             { curQuestion.question }
           </Typography>
           <TextField
-            onChange={this.props.handleChange}
+            onChange={ this.props.handleTextInput }
             id="answer-input"
             label="Answer"
             style={{ margin: 0 }}
@@ -83,7 +82,7 @@ class Question extends React.Component {
             InputLabelProps={{
               shrink: true,
             }}
-            value={ this.props.input }
+            value={ this.props.textInput }
           />
         </Paper>
         { this.props.showAnswer ? <Answer answer={ curQuestion.answer } /> : null }
