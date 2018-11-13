@@ -9,7 +9,8 @@ const GamePicker = props => (
             }
         </select>
         <Link
-            to={ `/quizPage/${ props.curShowNum }` }
+            to={ `/quiz/${props.curShowNum}` }
+            state={{ showNum: props.curShowNum  }}
         >Play!</Link>
     </div>
 )

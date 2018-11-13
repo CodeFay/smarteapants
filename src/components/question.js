@@ -37,10 +37,6 @@ const styles = theme => ({
 })
 
 class Question extends React.Component {
-  componentDidMount() {
-    this.props.getQuestions()
-  }
-
   render() {
     const curQuestion = this.props.curQuestion
     const { classes } = this.props
