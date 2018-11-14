@@ -4,6 +4,7 @@ import Layout from '../components/layout'
 import Question from '../components/question'
 
 import Axios from 'axios'
+const source = Axios.CancelToken.source()
 
 export default class Quiz extends React.Component {
     constructor(props) {
@@ -28,16 +29,22 @@ export default class Quiz extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.location && this.props.location.state.showNum)
-            this.getQuestions(this.props.location.state.showNum, data => {
-                this.setState({ questions: data })
+        if (this.props.location && this.props.location.state.showNum) {
+            this.getQuestions(this.props.location.state.showNum, async data => {
+                await this.setState({ questions: data })
             })
+        }
+    }
+
+    componentWillUnmount() {
+        source.cancel('Quiz component unmounted')
     }
 
     getQuestions = (showNum, callback) => {
         return Axios.get('/.netlify/functions/getQuestions',
             {
-                params: { showNum }
+                params: { showNum },
+                cancelToken: source.token
             })
             .then(async (res) => {
                 await callback(res.data)
