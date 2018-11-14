@@ -11,7 +11,8 @@ const client = new faunadb.Client({
 exports.handler = (event, context, callback) => {
   console.log("Function `getQuestions` invoked")
   /* parse the string body into a useable JS object */
-  const { showNum } = event.queryStringParameters
+  const showNum = event.queryStringParameters.showNum
+  const altShowNum = '4860'
 
   console.log(`Show number passed from component = ${typeof showNum} ${showNum}`)
   
@@ -19,7 +20,7 @@ exports.handler = (event, context, callback) => {
   return client.query(
     q.Map(
       q.Paginate(
-        q.Match(q.Index("questions_by_show_number"), `4680`)
+        q.Match(q.Index("questions_by_show_number"), "4680")
       ),
       q.Lambda("q", q.Get(q.Var("q")))
     )

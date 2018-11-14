@@ -28,16 +28,19 @@ export default class Quiz extends React.Component {
     }
 
     componentDidMount() {
-        this.getQuestions(this.props.location.state.showNum)
+        if (this.props.location && this.props.location.state.showNum)
+            this.getQuestions(this.props.location.state.showNum, data => {
+                this.setState({ questions: data })
+            })
     }
 
-    getQuestions = showNum => {
+    getQuestions = (showNum, callback) => {
         return Axios.get('/.netlify/functions/getQuestions',
             {
                 params: { showNum }
             })
-            .then(({ data }) => {
-                this.setState({ questions: data })
+            .then(async (res) => {
+                await callback(res.data)
             }).catch((err) => {
                 console.log('API error', err)
             })
