@@ -13,12 +13,18 @@ exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
   const { showNum } = event.queryStringParameters
 
-  console.log(`Show number passed from component = ${showNum}`)
+  console.log(`Show number passed from component = ${typeof showNum} ${showNum}`)
   
   /* construct the fauna query */
-  return client.query(q.Map(q.Paginate(q.Match(q.Index("questions_by_show_number"), "4680")), q.Lambda("q", q.Get(q.Var("q"))))) // This is hardcoded to "4680" for now
-  .then((res) => {
-    console.log("Success!", res.data.length)
+  return client.query(
+    q.Map(
+      q.Paginate(
+        q.Match(q.Index("questions_by_show_number"), `4680`)
+      ),
+      q.Lambda("q", q.Get(q.Var("q")))
+    )
+  ).then((res) => {
+    console.log("Success!", showNum, res.data.length)
     /* Success! return the response with statusCode 200 */
     return callback(null, {
       statusCode: 200,

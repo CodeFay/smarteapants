@@ -28,7 +28,7 @@ export default class Quiz extends React.Component {
     }
 
     componentDidMount() {
-        this.getQuestions(this.props.showNum)
+        this.getQuestions(this.props.location.state.showNum)
     }
 
     getQuestions = showNum => {
