@@ -4,7 +4,6 @@ import Layout from '../components/layout'
 import Question from '../components/question'
 
 import Axios from 'axios'
-const source = Axios.CancelToken.source()
 
 export default class Quiz extends React.Component {
     constructor(props) {
@@ -28,26 +27,34 @@ export default class Quiz extends React.Component {
         }
     }
 
+    _isMounted = false;
+
     componentDidMount() {
-        if (this.props.location && this.props.location.state.showNum) {
-            this.getQuestions(this.props.location.state.showNum, async data => {
-                await this.setState({ questions: data })
-            })
+        this._isMounted = true;
+        if (this.props.location.state && this.props.location.state.showNum) {
+            this.getQuestions(this.props.location.state.showNum)
+        } else {
+            console.log(this.parseParamsFromPath(this.props['*']))
+            this.getQuestions(this.parseParamsFromPath(this.props['*']))
         }
     }
 
     componentWillUnmount() {
-        source.cancel('Quiz component unmounted')
+        this._isMounted = false;
     }
 
-    getQuestions = (showNum, callback) => {
+    parseParamsFromPath(path) {
+        const params = path.replace('quiz/', '')
+        return params.split('/')[0] // only the first param is of interest
+    }
+
+    getQuestions = (showNum) => {
         return Axios.get('/.netlify/functions/getQuestions',
             {
                 params: { showNum },
-                cancelToken: source.token
             })
-            .then(async (res) => {
-                await callback(res.data)
+            .then((res) => {
+                this._isMounted && this.setState({ questions: res.data })
             }).catch((err) => {
                 console.log('API error', err)
             })
