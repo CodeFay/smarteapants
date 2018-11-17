@@ -24,7 +24,7 @@ class Index extends React.Component {
       this.getAirDates()
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() { // TODO: set debuggers on various compoWillUn to see when & why they are unmounting
       this._isMounted = false
   }
 
