@@ -1,18 +1,20 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
-const GamePicker = props => (
-    <div>
-        <select>
-            {
-                props.airDates.map(date => (<option key={ Date.parse(date) }>{ date }</option>))
-            }
-        </select>
-        <Link
-            to={ `/quiz/${props.curShowNum}` }
-            state={{ showNum: props.curShowNum  }}
-        >Play!</Link>
-    </div>
-)
-
-export default GamePicker
+export default class GamePicker extends React.Component {
+    render() {
+        return (
+            <div>
+                <select>
+                    {
+                        this.props.airDates.map(date => (<option key={ Date.parse(date) }>{ date }</option>))
+                    }
+                </select>
+                <Link
+                    to={ `/quiz/${this.props.curShowNum}` }
+                    state={{ showNum: this.props.curShowNum  }}
+                >Play!</Link>
+            </div>
+        )
+    }
+}

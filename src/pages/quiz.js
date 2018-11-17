@@ -31,7 +31,7 @@ export default class Quiz extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        if (this.props.location.state && this.props.location.state.showNum) {
+        if (this.props.location.state && this.props.location.state.showNum) { // TODO: figure out a reliable way to get at the value `showNum`
             this.getQuestions(this.props.location.state.showNum)
         } else {
             console.log(this.parseParamsFromPath(this.props['*']))
