@@ -68,23 +68,23 @@ export default class Quiz extends React.Component {
         const curIndex = this.state.curQuestion
         const curQuestion = this.state.questions[curIndex].data
         event.preventDefault()
-        if (this.state.input.length === 0 || this.state.wrongAnswer) { // no answer
+        if (this.state.textInput.length === 0 || this.state.wrongAnswer) { // no answer
           this.incCurQuestion()
-          this.setState({ input: '' })
+          this.setState({ textInput: '' })
           return
-        } else if (this.state.input === curQuestion.answer) { // right answer
+        } else if (this.state.textInput === curQuestion.answer) { // right answer
           let value = curQuestion.value
            ? +(curQuestion.value.substring(1))
            : 100
           this.handleDelta(value)
           this.incCurQuestion()
-          this.setState({ input: '' })
+          this.setState({ textInput: '' })
         } else { // wrong answer
           let value = -(curQuestion.value
            ? (curQuestion.value.substring(1))
            : 100)
           this.handleDelta(value)
-          this.setState({ input: '', wrongAnswer: true })
+          this.setState({ textInput: '', wrongAnswer: true })
         }
     }
     
@@ -96,7 +96,7 @@ export default class Quiz extends React.Component {
         }))
     }
 
-    incrCurQuestion = () => {
+    incCurQuestion = () => {
         this.setState( state => {
           return {
             curQuestion: ++state.curQuestion,
@@ -107,7 +107,7 @@ export default class Quiz extends React.Component {
 
     render() {
         return (
-            <Layout>
+            <Layout bank={ this.state.bank }>
                 <Question
                     handleTextInput={ event => this.handleTextInput(event) }
                     handleAnswerSubmit={ event => this.handleAnswerSubmit(event) }

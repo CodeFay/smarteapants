@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles' // TODO: figure out Materi
 
 const Layout = props => (
   <div className={ props.classes.container }>
-    <AppBar />
+    <AppBar bank={ props.bank }/>
     { props.children }
   </div>
 )
