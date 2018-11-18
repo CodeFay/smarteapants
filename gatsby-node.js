@@ -12,7 +12,7 @@ exports.onCreatePage = async ({ page, actions }) => {
     // page.matchPath is a special key that's used for matching pages
     // only on the client.
     if (page.path.match(/^\/quiz/)) {
-        page.matchPath = "/quiz/:showNum"
+        page.matchPath = "/quiz/:airDate"
 
         createPage(page)
     }

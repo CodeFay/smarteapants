@@ -12,8 +12,8 @@ class Index extends React.Component {
     super(props)
     this.state = {
       airDates: [], // TODO: get air_dates from questions in database
-      curShowDate: '',
-      curShowNum: '4860', // TODO: get showNum for showDate
+      curAirDate: '',
+      curShowNum: '', // TODO: get showNum for showDate
     }
   }
 
@@ -28,18 +28,37 @@ class Index extends React.Component {
       this._isMounted = false
   }
 
-  getAirDates = () => {
+  getAirDates = () => { // TODO: create query that selects all show_nums along with air_dates
     Axios.get('/.netlify/functions/getAirDates')
     .then(res => {
-      console.log(res)
-      this._isMounted && this.setState({ airDates: res.data })
+      console.log(res.data)
+      this._isMounted && this.setState({ airDates: res.data, curAirDate: res.data[0] })
     }).catch(err => {
       console.error('API error', err)
     })
   }
 
-  pickShowDate = ev => {
-    this.setState({ curShowDate: ev.target.value })
+  getShowNumByDate(airDate) {
+    Axios.get('/.netlify/functions/getShowNumByDate',
+      {
+        params: {
+          airDate
+        }
+      }
+    )
+    .then(res => {
+      console.log(`show_num ${res.data} from ${airDate}`)
+      this._isMounted && this.setState({ curShowNum: res })
+    }).catch(err => { console.log('API error', err)})
+  }
+
+  selectShowDate = ev => {
+    console.log("selected show date", ev.target.value)
+    this.setState({ curAirDate: ev.target.value })
+  }
+
+  submitShowDate = (airDate) => {
+    this.getShowNumByDate(airDate)
   }
 
   render() {
@@ -47,8 +66,9 @@ class Index extends React.Component {
       <Layout>
           <GamePicker
             airDates={ this.state.airDates }
-            curShowNum={ this.state.curShowNum }
-            handleSelect={ ev => this.pickShowDate(ev) }
+            curAirDate={ this.state.curAirDate }
+            handleSelect={ ev => this.selectShowDate(ev) }
+            handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
           />
       </Layout>
     )

@@ -5,14 +5,15 @@ export default class GamePicker extends React.Component {
     render() {
         return (
             <div>
-                <select>
+                <select onChange={ ev => this.props.handleSelect(ev) }>
                     {
                         this.props.airDates.map(date => (<option key={ Date.parse(date) }>{ date }</option>))
                     }
                 </select>
                 <Link
-                    to={ `/quiz/${this.props.curShowNum}` }
-                    state={{ showNum: this.props.curShowNum  }}
+                    onClick={ () => this.props.handleSubmit() }
+                    to={ `/quiz/${this.props.curAirDate}` }
+                    state={{ airDate: this.props.curAirDate  }}
                 >Play!</Link>
             </div>
         )

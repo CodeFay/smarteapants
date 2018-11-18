@@ -11,21 +11,21 @@ const client = new faunadb.Client({
 exports.handler = (event, context, callback) => {
   console.log("Function `getQuestions` invoked")
   /* parse the string body into a useable JS object */
-  const showNum = event.queryStringParameters.showNum
-  const altShowNum = '4860'
+  const airDate = event.queryStringParameters.airDate
+  const altairDate = '4860'
 
-  console.log(`Show number passed from component = ${typeof showNum} ${showNum}`)
+  console.log(`Show number passed from component = ${typeof airDate} ${airDate}`)
   
   /* construct the fauna query */
   return client.query(
     q.Map(
       q.Paginate(
-        q.Match(q.Index("questions_by_show_number"), "4680")
+        q.Match(q.Index("questions_by_air_date"), airDate)
       ),
       q.Lambda("q", q.Get(q.Var("q")))
     )
   ).then((res) => {
-    console.log("Success!", showNum, res.data.length)
+    console.log("Success!", airDate, res.data.length)
     /* Success! return the response with statusCode 200 */
     return callback(null, {
       statusCode: 200,

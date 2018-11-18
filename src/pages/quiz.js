@@ -31,15 +31,15 @@ export default class Quiz extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        if (this.props.location.state && this.props.location.state.showNum) { // TODO: figure out a reliable way to get at the value `showNum`
-            this.getQuestions(this.props.location.state.showNum)
-        } else {
-            console.log(this.parseParamsFromPath(this.props['*']))
-            this.getQuestions(this.parseParamsFromPath(this.props['*']))
-        }
+        // if (this.props.location.state && this.props.location.state.airDate) {
+            this.getQuestions(this.props.location.state.airDate) // TODO: figure out a reliable way to get at the value `airDate`
+        // } else {
+        //     console.log(this.parseParamsFromPath(this.props['*']))
+        //     this.getQuestions(this.parseParamsFromPath(this.props['*']))
+        // }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount() { // TODO: put a debugger here to try and figure out with this thing is randomly unmounting
         this._isMounted = false;
     }
 
@@ -48,10 +48,10 @@ export default class Quiz extends React.Component {
         return params.split('/')[0] // only the first param is of interest
     }
 
-    getQuestions = (showNum) => {
+    getQuestions = airDate => {
         return Axios.get('/.netlify/functions/getQuestions',
             {
-                params: { showNum },
+                params: { airDate },
             })
             .then((res) => {
                 this._isMounted && this.setState({ questions: res.data })
