@@ -114,7 +114,7 @@ export default class Quiz extends React.Component {
                     handleDelta={ value => this.handleDelta(value) }
                     curQuestion={ this.state.questions[this.state.curQuestion].data }
                     textInput={ this.state.textInput }
-                    showAnswer={ this.state.showAnswer }
+                    showAnswer={ this.state.wrongAnswer }
                 />
             </Layout>
         )
