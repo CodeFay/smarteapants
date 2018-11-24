@@ -1,122 +1,78 @@
 import React from 'react'
 
-import Question from '../components/question'
-import AppBar from '../components/appBar'
+import GamePicker from '../components/gamePicker'
+import Layout from '../components/layout'
 
-import { withStyles } from '@material-ui/core/styles'
+import Axios from 'axios';
 
-import Axios from 'axios'
-
-let backgroundColor = ''
-
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-})
+// import { withStyles } from '@material-ui/core/styles' // TODO: figure out Material-UI
 
 class Index extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      input: '',
-      bank: 0,
-      submitted: 0,
-      questions: [
-        {
-          data: {
-            question: '',
-            category: '',
-            value: '',
-            answer: ''
-          }
+      airDates: [], // TODO: get air_dates from questions in database
+      curAirDate: '',
+      curShowNum: '', // TODO: get showNum for showDate
+    }
+  }
+
+  _isMounted = false
+
+  componentDidMount() {
+      this._isMounted = true
+      this.getAirDates()
+  }
+
+  componentWillUnmount() { // TODO: set debuggers on various compoWillUn to see when & why they are unmounting
+      this._isMounted = false
+  }
+
+  getAirDates = () => { // TODO: create query that selects all show_nums along with air_dates
+    Axios.get('/.netlify/functions/getAirDates')
+    .then(res => {
+      console.log(res.data)
+      this._isMounted && this.setState({ airDates: res.data, curAirDate: res.data[0] })
+    }).catch(err => {
+      console.error('API error', err)
+    })
+  }
+
+  getShowNumByDate(airDate) {
+    Axios.get('/.netlify/functions/getShowNumByDate',
+      {
+        params: {
+          airDate
         }
-      ],
-      curQuestion: 0,
-      wrongAnswer: false
-    }
-  }
-
-  handleChange = event => {
-    this.setState({
-      input: event.target.value,
-    })
-  }
-  
-  handleSubmit = event => {
-    const curIndex = this.state.curQuestion
-    const curQuestion = this.state.questions[curIndex].data
-    event.preventDefault()
-    if (this.state.input.length === 0 || this.state.wrongAnswer) { // no answer
-      this.incCurQuestion()
-      this.setState({ input: '' })
-      return
-    } else if (this.state.input === curQuestion.answer) { // right answer
-      let value = curQuestion.value
-       ? +(curQuestion.value.substring(1))
-       : 100
-      this.handleDelta(value)
-      this.incCurQuestion()
-      this.setState({ input: '' })
-    } else { // wrong answer
-      let value = -(curQuestion.value
-       ? (curQuestion.value.substring(1))
-       : 100)
-      this.handleDelta(value)
-      this.setState({ input: '', wrongAnswer: true })
-    }
-  }
-
-  incCurQuestion = () => {
-    this.setState( state => {
-      return {
-        curQuestion: ++state.curQuestion,
-        wrongAnswer: false
       }
-    })
+    )
+    .then(res => {
+      console.log(`show_num ${res.data} from ${airDate}`)
+      this._isMounted && this.setState({ curShowNum: res })
+    }).catch(err => { console.log('API error', err)})
   }
 
-  handleDelta = (value) => {
-    var delta = value > 0 ? 1 : -1
-    this.setState((state, props) => ({
-      bank: state.bank + value,
-      submitted: delta,
-    }))
+  selectShowDate = ev => {
+    console.log("selected show date", ev.target.value)
+    this.setState({ curAirDate: ev.target.value })
   }
 
-  getQuestions = () => {
-    return Axios.get('/.netlify/functions/getQuestions')
-      .then(res => {
-        this.setState({ questions: res.data.data })
-      }).catch((err) => {
-        console.log('API error', err)
-      })
-  }
-
-  showQuestion = (i) => {
-    const question = this.state.questions[i]
-    return question
+  submitShowDate = (airDate) => {
+    this.getShowNumByDate(airDate)
   }
 
   render() {
-    const { classes } = this.props
     return (
-      <div className={classes.container}>
-        <AppBar change={this.state.submittted} bank={this.state.bank} />
-        <Question
-          handleChange={ event => this.handleChange(event) }
-          handleSubmit={ event => this.handleSubmit(event) }
-          handleDelta={ value => this.handleDelta(value) }
-          getQuestions={ () => this.getQuestions() }
-          showQuestion={ (i) => this.showQuestion(i) }
-          curQuestion={ this.state.curQuestion }
-          input={ this.state.input }
-          showAnswer={ this.state.wrongAnswer }
-        />
-      </div>
+      <Layout>
+          <GamePicker
+            airDates={ this.state.airDates }
+            curAirDate={ this.state.curAirDate }
+            handleSelect={ ev => this.selectShowDate(ev) }
+            handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
+          />
+      </Layout>
     )
   }
 }
 
-export default withStyles(styles)(Index)
+export default Index
