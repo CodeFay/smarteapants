@@ -39,6 +39,7 @@ const styles = theme => ({
 class Question extends React.Component {
   render() {
     const curQuestion = this.props.curQuestion
+    const questionString = curQuestion.question.length
     const { classes } = this.props
     return (
       <form className={classes.layout} onSubmit={this.props.handleAnswerSubmit}>
@@ -65,7 +66,7 @@ class Question extends React.Component {
             color="textPrimary"
             gutterBottom
           >
-            { curQuestion.question }
+            {curQuestion.question.substring(1,questionString-1) }
           </Typography>
           <TextField
             onChange={ this.props.handleTextInput }
