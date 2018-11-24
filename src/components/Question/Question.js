@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
-import Answer from '../components/answer'
+import Answer from './answer'
 
 const styles = theme => ({
   layout: {

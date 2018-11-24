@@ -1,7 +1,7 @@
 import React from 'react'
 
 import GamePicker from '../components/gamePicker'
-import Layout from '../components/layout'
+import Layout from '../hoc/layout'
 
 import Axios from 'axios';
 

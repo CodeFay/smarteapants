@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Link } from 'gatsby'
 
 export default class GamePicker extends React.Component {
