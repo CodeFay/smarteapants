@@ -1,3 +1,5 @@
+// Moved Navigation AppBar into Layout.js
+
 import React from 'react'
 import Img from 'gatsby-image'
 
@@ -26,7 +28,7 @@ function Navigation(props) {
           title="SmarTea Pants logo"
           alt="SmarTea Pants logo"
           fluid={props.logoImage}
-          style={{ width: '50%', margin: '10px 0px 0px 0px'}} 
+          style={{ width: '50%', margin: '10px 0'}}
           />
         </Typography>
         <Typography color='inherit'>Bank: ${bank}</Typography>
