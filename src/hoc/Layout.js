@@ -1,3 +1,5 @@
+// Do we need the Layout component?  Unclear why we have it
+
 import React from 'react'
 
 import Navigation from '../components/Navigation'
@@ -7,7 +9,9 @@ import { withStyles } from '@material-ui/core/styles' // TODO: figure out Materi
 const Layout = (props) => {
   return (
     <div className={ props.classes.container }>
-    <Navigation bank={ props.bank } />
+    <Navigation
+      logoImage={props.logoImage}
+      bank={ props.bank } />
     { props.children }
     </div>
   )
@@ -22,17 +26,3 @@ const styles = () => ({
 
 export default withStyles(styles)(Layout)
 //TODO: why do we use withStyles? Is there a way to clean up styling / move to other file?
-
-
-
-// export const query = graphql`
-//   query {
-//     file(relativePath: { eq: "smartea_logo_white.png" }) {
-//       childImageSharp {
-//         fluid(maxWidth: 700) {
-//           ...GatsbyImageSharpFluid
-//         }
-//       }
-//     }
-//   }
-// `

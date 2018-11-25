@@ -1,4 +1,5 @@
 import React from 'react'
+import Img from 'gatsby-image'
 
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -13,11 +14,7 @@ const styles = {
   }
 }
 // <img src={Logo}/>
-// <Img
-// title="Logo image"
-// alt="SmarTea Pants logo"
-// fluid={logoImage}
-// />
+// SmarTea Pants
 
 function Navigation(props) {
   const { classes, bank } = props
@@ -25,11 +22,14 @@ function Navigation(props) {
     <AppBar position='static'>
       <Toolbar>
         <Typography variant="h6" color="inherit" className={classes.root}>
-            SmarTea Pants
+          <Img
+          title="SmarTea Pants logo"
+          alt="SmarTea Pants logo"
+          fluid={props.logoImage}
+          style={{ width: '50%', margin: '10px 0px 0px 0px'}} 
+          />
         </Typography>
-        <div>
-          <Typography color='inherit'>Bank: ${bank}</Typography>
-        </div>
+        <Typography color='inherit'>Bank: ${bank}</Typography>
       </Toolbar>
     </AppBar>
   )

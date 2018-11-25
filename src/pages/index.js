@@ -1,7 +1,10 @@
 import React from 'react'
+import { graphql } from "gatsby"
+// import Img from 'gatsby-image'
 
 import GamePicker from '../components/gamePicker'
-import Layout from '../hoc/layout'
+import Navigation from '../components/Navigation'
+// import Layout from '../hoc/layout'
 
 import Axios from 'axios';
 
@@ -61,18 +64,33 @@ class Index extends React.Component {
     this.getShowNumByDate(airDate)
   }
 
+// <Layout logoImage={this.props.data.logoImage.childImageSharp.fluid}>
+// </Layout>
   render() {
     return (
-      <Layout>
-          <GamePicker
-            airDates={ this.state.airDates }
-            curAirDate={ this.state.curAirDate }
-            handleSelect={ ev => this.selectShowDate(ev) }
-            handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
-          />
-      </Layout>
+      <React.Fragment>
+        <Navigation logoImage={this.props.data.logoImage.childImageSharp.fluid}/>
+        <GamePicker
+          airDates={ this.state.airDates }
+          curAirDate={ this.state.curAirDate }
+          handleSelect={ ev => this.selectShowDate(ev) }
+          handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
+        />
+      </React.Fragment>
     )
   }
 }
 
 export default Index
+
+export const query = graphql`
+  query {
+    logoImage: file(relativePath: {eq: "smartea_logo_white.png"}) {
+      childImageSharp {
+        fluid(maxWidth: 700) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
