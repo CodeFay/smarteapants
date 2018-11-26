@@ -1,9 +1,9 @@
 import React from 'react'
+import Axios from 'axios';
 
 import GamePicker from '../components/gamePicker'
 import Layout from '../hoc/layout'
 
-import Axios from 'axios';
 
 class Index extends React.Component {
   constructor(props) {
@@ -62,6 +62,7 @@ class Index extends React.Component {
   render() {
     return (
       <Layout>
+      <br/>
         <GamePicker
           airDates={ this.state.airDates }
           curAirDate={ this.state.curAirDate }

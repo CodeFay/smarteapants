@@ -30,10 +30,7 @@ const styles = theme => ({
   },
   grid: {
     flexGrow: 1,
-  },
-  chip: {
-    margin: theme.spacing.unit,
-  },
+  }
 })
 
 class Question extends React.Component {
