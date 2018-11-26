@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Layout from '../hoc/layout'
-import Question from '../components/question/question'
+import Layout from '../hoc/Layout'
+import Question from '../components/Question/Question'
 
 import Axios from 'axios'
 
