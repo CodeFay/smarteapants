@@ -1,9 +1,8 @@
 import React from 'react'
 import Axios from 'axios';
 
-import GamePicker from '../components/GamePicker'
+import GamePicker from '../components/gamePicker'
 import Layout from '../hoc/Layout'
-
 
 class Index extends React.Component {
   constructor(props) {
