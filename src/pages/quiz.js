@@ -31,6 +31,7 @@ export default class Quiz extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
+        this.storage();
         // if (this.props.location.state && this.props.location.state.airDate) {
             this.getQuestions(this.props.location.state.airDate) // TODO: figure out a reliable way to get at the value `airDate`
         // } else {
@@ -47,6 +48,12 @@ export default class Quiz extends React.Component {
         const params = path.replace('quiz/', '')
         return params.split('/')[0] // only the first param is of interest
     }
+
+    storage = () => {
+      if (!typeof window.localStorage === "undefined") return window.localStorage;
+      else if (!typeof localStorage === "undefined") return localStorage;
+      else return false;
+    };
 
     getQuestions = airDate => {
         return Axios.get('/.netlify/functions/getQuestions',
@@ -90,7 +97,7 @@ export default class Quiz extends React.Component {
 
     handleDelta = value => {
         var delta = value > 0 ? 1 : -1
-        localStorage.setItem('bank',this.state.bank + value, value);
+        // localStorage.setItem('bank',this.state.bank + value, value);
         this.setState((state, props) => ({
           bank: state.bank + value,
           submitted: delta,
