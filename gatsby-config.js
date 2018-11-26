@@ -38,5 +38,5 @@ module.exports = {
         icon: 'src/assets/images/gatsby-icon.png', // This path is relative to the root of the site.
       },
     }
-  ],
+  ]
 }
