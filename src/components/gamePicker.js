@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 
 const styles = theme => ({
   card: {

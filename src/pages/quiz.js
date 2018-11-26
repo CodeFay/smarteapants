@@ -10,7 +10,7 @@ export default class Quiz extends React.Component {
         super(props)
         this.state = {
             textInput: '',
-            bank: 0,
+            bank: +localStorage.getItem('bank'),
             submitted: 0,
             questions: [
               {
@@ -90,6 +90,7 @@ export default class Quiz extends React.Component {
 
     handleDelta = value => {
         var delta = value > 0 ? 1 : -1
+        localStorage.setItem('bank',this.state.bank + value, value);
         this.setState((state, props) => ({
           bank: state.bank + value,
           submitted: delta,
