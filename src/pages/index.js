@@ -60,7 +60,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <Layout bank={window.localStorage.getItem('bank')}>
       <br/>
         <GamePicker
           airDates={ this.state.airDates }
