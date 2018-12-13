@@ -32,10 +32,10 @@ export default (props) => (
             title="SmarTea Pants logo"
             alt="SmarTea Pants logo"
             fluid={data.logoImage.childImageSharp.fluid}
-            style={{ width: '50%', margin: '10px 0'}}
+            style={{ width: '60%', margin: '10px 0'}}
             />
           </Typography>
-          <Typography color='inherit'>Bank: ${props.bank}</Typography>
+          <Typography variant="caption" color='inherit' style={{fontSize: '4vw'}} >Bank: ${props.bank}</Typography>
         </Toolbar>
       </AppBar>
       {props.children}
