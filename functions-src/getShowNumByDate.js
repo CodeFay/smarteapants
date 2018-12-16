@@ -9,10 +9,7 @@ const client = new faunadb.Client({
 
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
-    console.log("Netlify lambda func `getShowNumByDate` fired")
-
     const airDate = event.queryStringParameters.airDate
-    console.log(`airDate received from queryString: ${airDate}`)
 
     client.query(
         q.Select(["data", "show_number"], q.Get(q.Match(q.Index("show_num_by_air_date"), airDate)))
