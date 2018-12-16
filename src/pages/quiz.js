@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Layout from '../components/layout'
-import Question from '../components/question'
+import Layout from '../hoc/Layout'
+import Question from '../components/Question/Question'
 
 import Axios from 'axios'
 
@@ -63,7 +63,7 @@ export default class Quiz extends React.Component {
     handleTextInput = event => {
         this.setState({ textInput: event.target.value })
     }
-      
+
     handleAnswerSubmit = event => {
         const curIndex = this.state.curQuestion
         const curQuestion = this.state.questions[curIndex].data
@@ -87,7 +87,7 @@ export default class Quiz extends React.Component {
           this.setState({ textInput: '', wrongAnswer: true })
         }
     }
-    
+
     handleDelta = value => {
         var delta = value > 0 ? 1 : -1
         this.setState((state, props) => ({

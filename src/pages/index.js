@@ -1,11 +1,8 @@
 import React from 'react'
-
-import GamePicker from '../components/gamePicker'
-import Layout from '../components/layout'
-
 import Axios from 'axios';
 
-// import { withStyles } from '@material-ui/core/styles' // TODO: figure out Material-UI
+import GamePicker from '../components/GamePicker'
+import Layout from '../hoc/Layout'
 
 class Index extends React.Component {
   constructor(props) {
@@ -64,12 +61,13 @@ class Index extends React.Component {
   render() {
     return (
       <Layout>
-          <GamePicker
-            airDates={ this.state.airDates }
-            curAirDate={ this.state.curAirDate }
-            handleSelect={ ev => this.selectShowDate(ev) }
-            handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
-          />
+      <br/>
+        <GamePicker
+          airDates={ this.state.airDates }
+          curAirDate={ this.state.curAirDate }
+          handleSelect={ ev => this.selectShowDate(ev) }
+          handleSubmit={ () => this.submitShowDate(this.state.curAirDate) }
+        />
       </Layout>
     )
   }
