@@ -5,8 +5,8 @@ const define = {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  const env = require("./.env.development.json")
-  define['process.env.FAUNA_KEY'] = JSON.stringify(env.FAUNA_KEY)
+  const FAUNA_KEY = require("./.env.development.json").FAUNA_KEY
+  define['process.env.FAUNA_KEY'] = JSON.stringify(FAUNA_KEY)
 }
 /* fix for https://medium.com/@danbruder/typeerror-require-is-not-a-function-webpack-faunadb-6e785858d23b */
 module.exports = {
