@@ -28,7 +28,6 @@ class Index extends React.Component {
   getAirDates = () => { // TODO: create query that selects all show_nums along with air_dates
     Axios.get('/.netlify/functions/getAirDates')
     .then(res => {
-      console.log(res.data)
       this._isMounted && this.setState({ airDates: res.data, curAirDate: res.data[0] })
     }).catch(err => {
       console.error('API error', err)
@@ -44,13 +43,11 @@ class Index extends React.Component {
       }
     )
     .then(res => {
-      console.log(`show_num ${res.data} from ${airDate}`)
       this._isMounted && this.setState({ curShowNum: res })
-    }).catch(err => { console.log('API error', err)})
+    }).catch(err => { console.error('API error', err)})
   }
 
   selectShowDate = ev => {
-    console.log("selected show date", ev.target.value)
     this.setState({ curAirDate: ev.target.value })
   }
 

@@ -9,12 +9,9 @@ const client = new faunadb.Client({
 
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
-    console.log("Netlify Lambda fn `getAirDates` invoked")
-
     client.query(
         q.Paginate(q.Distinct(q.Match(q.Index("air_date"))))
     ).then(res => {
-        console.log("Fauna response:", res)
         return callback(null, {
             statusCode: 200,
             body: JSON.stringify(res.data)

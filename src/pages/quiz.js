@@ -31,12 +31,7 @@ export default class Quiz extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        // if (this.props.location.state && this.props.location.state.airDate) {
-            this.getQuestions(this.props.location.state.airDate) // TODO: figure out a reliable way to get at the value `airDate`
-        // } else {
-        //     console.log(this.parseParamsFromPath(this.props['*']))
-        //     this.getQuestions(this.parseParamsFromPath(this.props['*']))
-        // }
+        this.getQuestions(this.props.location.state.airDate) // TODO: figure out a reliable way to get at the value `airDate`
     }
 
     componentWillUnmount() { // TODO: put a debugger here to try and figure out with this thing is randomly unmounting
@@ -56,7 +51,7 @@ export default class Quiz extends React.Component {
             .then((res) => {
                 this._isMounted && this.setState({ questions: res.data })
             }).catch((err) => {
-                console.log('API error', err)
+                console.error('API error', err)
             })
     }
 
